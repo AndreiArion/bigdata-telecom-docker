@@ -21,9 +21,7 @@ RUN ccm create test_3_0_15 -v 3.0.15 -n 3
 
 ### Fix JNA problem for arm64 arch  (mac M1) 
 ### https://stackoverflow.com/questions/69486339/nativelibrarydarwin-java64-failed-to-link-the-c-library-against-jna-native-m
-RUN cd ~/.ccm/repository/3.0.15/lib/
-RUN rm jna-4.2.2.jar
-RUN wget https://search.maven.org/remotecontent?filepath=net/java/dev/jna/jna/5.8.0/jna-5.8.0.jar
+RUN cd ~/.ccm/repository/3.0.15/lib/;rm jna-4.2.2.jar; wget https://search.maven.org/remotecontent?filepath=net/java/dev/jna/jna/5.8.0/jna-5.8.0.jar
 RUN cd
 
 ### TODO
