@@ -3,6 +3,3 @@ listen:
   port: 8192
 storage:
   dir: /opt/notebooks
-  mounts:
-    examples:
-      dir: examples

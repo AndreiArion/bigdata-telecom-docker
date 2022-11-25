@@ -41,3 +41,5 @@ ln -sf /dev/stdout $SPARK_MASTER_LOG && \
 ln -sf /dev/stdout $SPARK_WORKER_LOG
 
 COPY start-spark.sh /
+
+CMD ["/bin/bash", "/start-spark.sh"]

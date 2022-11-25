@@ -12,7 +12,7 @@ services:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
   spark-worker-a:
-    image: cluster-apache-spark:3.0.2
+    image: inf728-cassandra-spark:3.0.2
     ports:
       - "9091:8080"
       - "7000:7000"
@@ -30,7 +30,7 @@ services:
        - ./apps:/opt/spark-apps
        - ./data:/opt/spark-data
   spark-worker-b:
-    image: cluster-apache-spark:3.0.2
+    image: inf728-cassandra-spark:3.0.2
     ports:
       - "9092:8080"
       - "7001:7000"
@@ -47,3 +47,10 @@ services:
     volumes:
         - ./apps:/opt/spark-apps
         - ./data:/opt/spark-data
+  polynote:
+    image: inf728-polynote:0.4.10
+    ports:
+      - "8192:8192"
+    volumes:
+      - ./notebooks:/opt/notebooks
+    container_name: polynote
