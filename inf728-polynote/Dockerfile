@@ -4,6 +4,7 @@ FROM eclipse-temurin:11.0.12_7-jdk
 
 
 
+ARG SPARK_VERSION="3.3.1"
 ARG POLYNOTE_VERSION
 ARG SCALA_VERSION="2.12"
 ARG DIST_TAR="polynote-dist.tar.gz"
@@ -44,6 +45,17 @@ ENV POLYNOTE_SCALA_VERSION ${SCALA_VERSION}
 # copy configuration
 COPY config.yml ./polynote/config.yml
 
+# install spark
+WORKDIR /opt/spark/work-dir
+RUN wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz
+RUN tar -xvf spark-${SPARK_VERSION}-bin-hadoop3.tgz
+RUN mv spark-${SPARK_VERSION}-bin-hadoop3/* /opt/spark
+WORKDIR /opt/spark
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+ENV PYSPARK_PYTHON=python3
 
 # start polynote on container run
+WORKDIR /opt
+
 ENTRYPOINT ["./polynote/polynote.py"]
