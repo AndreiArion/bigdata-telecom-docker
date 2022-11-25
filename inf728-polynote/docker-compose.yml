@@ -1,0 +1,10 @@
+version: '3'
+services:
+  polynote:
+    image: inf728-polynote:0.4.10
+    ports:
+      - "8192:8192"
+    volumes:
+      - ./data:/data
+      - ./notebooks:/opt/notebooks
+    container_name: polynote
