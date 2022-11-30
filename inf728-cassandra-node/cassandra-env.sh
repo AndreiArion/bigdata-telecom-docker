@@ -10,5 +10,5 @@ CASSANDRA_DC=sauron_dc1
 CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
 
 # define gossip entrypoints
-CASSANDRA_SEEDS=spark-master,spark-worker-a,spark-worker-b
+CASSANDRA_SEEDS=cassandra-1,cassandra-2,cassandra-3
 

@@ -2,12 +2,14 @@
 
 . "/opt/spark/bin/load-spark-env.sh"
 
+ADDITIONAL_OPTIONS=" --packages com.datastax.spark:spark-cassandra-connector-driver_2.12:3.1.0"
+
 if [ "$SPARK_WORKLOAD" == "master" ];
 then
 
 export SPARK_MASTER_HOST=`hostname`
 
-cd /opt/spark/bin && ./spark-class org.apache.spark.deploy.master.Master --ip $SPARK_MASTER_HOST --port $SPARK_MASTER_PORT --webui-port $SPARK_MASTER_WEBUI_PORT >> $SPARK_MASTER_LOG
+cd /opt/spark/bin && ./spark-class org.apache.spark.deploy.master.Master --ip $SPARK_MASTER_HOST --port $SPARK_MASTER_PORT --webui-port $SPARK_MASTER_WEBUI_PORT  >> $SPARK_MASTER_LOG
 
 elif [ "$SPARK_WORKLOAD" == "worker" ];
 then

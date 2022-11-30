@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   spark-master:
-    image: inf728-cassandra-spark:3.3.1
+    image: inf728-spark:3.3.1
     ports:
       - "9090:8080"
       - "7077:7077"
@@ -13,7 +13,7 @@ services:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
   spark-worker-a:
-    image: inf728-cassandra-spark:3.3.1
+    image: inf728-spark:3.3.1
     ports:
       - "9091:8080"
       - "7000:7000"
@@ -32,7 +32,7 @@ services:
        - ./apps:/opt/spark-apps
        - ./data:/opt/spark-data
   spark-worker-b:
-    image: inf728-cassandra-spark:3.3.1
+    image: inf728-spark:3.3.1
     ports:
       - "9092:8080"
       - "7001:7000"
@@ -50,6 +50,60 @@ services:
     volumes:
         - ./apps:/opt/spark-apps
         - ./data:/opt/spark-data
+  cassandra-1:
+    image: cassandra:3.11.4
+    env_file:
+      - inf728-cassandra-node/cassandra-env.sh
+#    ports:
+#      - "7199:7199" # JMX
+#      - "7000:7000" # cluster communication
+#      - "7001:7001" # cluster communication (SSL)
+#      - "9042:9042" # native protocol clients
+#      - "9160:9160" # thrift clients
+    volumes:
+      - ./data/cassandra-1:/var/lib/cassandra
+  cassandra-2:
+    image: cassandra:3.11.4
+    env_file:
+      - inf728-cassandra-node/cassandra-env.sh
+#    ports:
+#      - "7199:7199" # JMX
+#      - "7000:7000" # cluster communication
+#      - "7001:7001" # cluster communication (SSL)
+#      - "9042:9042" # native protocol clients
+#      - "9160:9160" # thrift clients
+    depends_on:
+      - cassandra-1
+    volumes:
+      - ./data/cassandra-2:/var/lib/cassandra
+  cassandra-3:
+    image: cassandra:3.11.4
+    env_file:
+      - inf728-cassandra-node/cassandra-env.sh
+#    ports:
+#      - "7199:7199" # JMX
+#      - "7000:7000" # cluster communication
+#      - "7001:7001" # cluster communication (SSL)
+#      - "9042:9042" # native protocol clients
+#      - "9160:9160" # thrift clients
+    depends_on:
+      - cassandra-1
+      - cassandra-2
+    volumes:
+      - ./data/cassandra-3:/var/lib/cassandra
+  cqlsh:
+    image: cassandra:3.11
+    entrypoint: cqlsh cassandra-1
+    volumes:
+      - ./inf728-cassandra-node/schema.cql:/schema.cql
+    depends_on:
+      - cassandra-1
+  nodetool:
+    image: cassandra:3.11
+    entrypoint: nodetool -h cassandra-1 -p
+    command: help
+    depends_on:
+      - cassandra-1
   polynote:
     image: inf728-polynote:0.4.10
     ports:
@@ -57,4 +111,5 @@ services:
       - "4043:4040"
     volumes:
       - ./notebooks:/opt/notebooks
+      - ./data:/opt/spark-data
     container_name: polynote
