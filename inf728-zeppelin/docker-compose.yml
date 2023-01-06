@@ -2,11 +2,15 @@ version: '3'
 services:
   zeppelin:
     image: apache/zeppelin:0.10.1
+    env_file:
+      - .env
     ports:
       - "8080:8080"
       - "7077:7077"
       - "4040:4040"
+      - "6789:6789"
     volumes:
       - ./notebook:/opt/zeppelin/notebook/gdelt
       - ./logs:/logs
+      - ./spark-3.1.2-bin-hadoop3.2:/opt/spark
     container_name: inf728-zeppelin
