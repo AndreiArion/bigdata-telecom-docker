@@ -6,4 +6,4 @@ docker-compose run nodetool status
 
 
 ### Ressources:
-cassandra-spark container is based on https://github.com/mvillarrealb/docker-spark-cluster and 
+cassandra-spark container is based on https://github.com/mvillarrealb/docker-spark-cluster 

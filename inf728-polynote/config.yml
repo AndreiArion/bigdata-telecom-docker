@@ -3,3 +3,8 @@ listen:
   port: 8192
 storage:
   dir: /opt/notebooks
+spark:
+  properties:
+    spark.driver.userClasspathFirst: true
+    spark.executor.userClasspathFirst: true
+    spark_submit_args: "--some --arguments"

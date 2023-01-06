@@ -1,0 +1,12 @@
+version: '3'
+services:
+  zeppelin:
+    image: apache/zeppelin:0.10.1
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "4040:4040"
+    volumes:
+      - ./notebook:/opt/zeppelin/notebook/gdelt
+      - ./logs:/logs
+    container_name: inf728-zeppelin
